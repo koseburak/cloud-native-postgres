@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pgadmin
+  namespace: devops
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      containers:
+        - name: pgadmin
+          image: postgres:10.6
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 80
+              name: port-pgadmin
+          envFrom:
+            - configMapRef:
+                name: pgadmin-config
+          volumeMounts:
+            - mountPath: /pgadmin4
+              name: pgadmin-vol
+      volumes:
+        - name: pgadmin-vol
+          persistentVolumeClaim:
+            claimName: pgadmin-pv-claim

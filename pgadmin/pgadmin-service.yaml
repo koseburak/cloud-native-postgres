@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin
+  namespace: devops
+  labels:
+    app: pgadmin
+spec:
+  type: NodePort
+  ports:
+   - port: 30101
+     protocol: TCP
+     targetPort: 5432
+     nodePort: 30101
+     name: port-pgadmin
+  selector:
+   app: pgadmin

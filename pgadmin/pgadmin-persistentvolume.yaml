@@ -1,0 +1,33 @@
+# persistent volume for pgadmin server
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pgadmin-pv-volume
+  namespace: devops
+  labels:
+    type: local
+    app: pgadmin
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/kube-data/pgadmin"
+
+# persistent volume claim for pgadmin server
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pgadmin-pv-claim
+  namespace: devops
+  labels:
+    app: pgadmin
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
