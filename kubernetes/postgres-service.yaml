@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: devops
+  labels:
+    app: postgres
+spec:
+  type: NodePort
+  ports:
+   - port: 20100
+     protocol: TCP
+     targetPort: 5432
+     nodePort: 20100
+     name: port-postgres
+  selector:
+   app: postgres
